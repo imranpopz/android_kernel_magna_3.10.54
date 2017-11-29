@@ -176,12 +176,6 @@ obj-y	+= ssw/
 endif
 endif
 
-# LGE_CHANGE_S: [2014-09-04] boyoung1.kim@lge.com
-# Comment:Error occurs if there are in front of gpio driver
-obj-$(CONFIG_CUSTOM_KERNEL_ALSPS) += alsps/
-obj-$(CONFIG_CUSTOM_KERNEL_ACCELEROMETER) += accelerometer/
-obj-$(CONFIG_CUSTOM_KERNEL_MAGNETOMETER) += magnetometer/
-# LGE_CHANGE_E: [2014-09-04] boyoung1.kim@lge.com
 
 # LGE_CHANGE_S: [2014-09-24] jeongjoo.lee@lge.com
 # Comment: Enable hall_ic drvier

@@ -132,7 +132,7 @@ void init_dsi(BOOL isDsiPoweredOn)
                                    TRUE,                    //ecc_en
                                    lcm_params->dsi.LANE_NUM, //ecc_en
                                    0,                       //vc_num
-                                   lcm_params->dsi.null_packet_en,  //null_packet_en
+                                   FALSE,                   //null_packet_en
                                    FALSE,                   //err_correction_en
                                    FALSE,                   //dis_eotp_en
 								   FALSE,
@@ -146,7 +146,7 @@ void init_dsi(BOOL isDsiPoweredOn)
                                    TRUE,                    //ecc_en
                                    lcm_params->dsi.LANE_NUM, //ecc_en
                                    0,                       //vc_num
-                                   lcm_params->dsi.null_packet_en,  //null_packet_en
+                                   FALSE,                   //null_packet_en
                                    FALSE,                   //err_correction_en
                                    FALSE,                   //dis_eotp_en
 								   (BOOL)(1 - lcm_params->dsi.cont_clock),

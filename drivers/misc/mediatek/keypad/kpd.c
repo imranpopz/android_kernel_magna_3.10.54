@@ -26,14 +26,6 @@
 #define KPD_NAME	"mtk-kpd"
 #define MTK_KP_WAKESOURCE	/* this is for auto set wake up source */
 
-#ifdef CONFIG_OF
-void __iomem *kp_base;
-static unsigned int kp_irqnr;
-#endif	
-#if 1  /*                                                               */
-#define LGE_KEY_LOCK 100
-extern void touch_keylock_enable(int key_lock);
-#endif  /*                                                               */
 struct input_dev *kpd_input_dev;
 static bool kpd_suspend = false;
 static int kpd_show_hw_keycode = 1;
@@ -733,24 +725,6 @@ long kpd_dev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		kpd_auto_test_for_factorymode();	/* API 3 for kpd factory mode auto-test */
 		printk("[kpd_auto_test_for_factorymode] test performed!!\n");
 		break;
-#if 1  /*                                                               */
-        case LGE_KEY_LOCK :
-            if(key_lock == 1)
-            {
-                __clear_bit(KEY_VOLUMEUP, kpd_input_dev->keybit);
-                __clear_bit(KEY_VOLUMEDOWN, kpd_input_dev->keybit);
-                __clear_bit(KEY_HOME, kpd_input_dev->keybit);
-                touch_keylock_enable(1);
-            }
-            else
-            {
-                __set_bit(KEY_VOLUMEUP, kpd_input_dev->keybit);
-                __set_bit(KEY_VOLUMEDOWN, kpd_input_dev->keybit);
-                __set_bit(KEY_HOME, kpd_input_dev->keybit);
-                touch_keylock_enable(0);
-            }
-            break;		
-#endif  /*                                                               */
 	default:
 		return -EINVAL;
 	}
@@ -789,21 +763,6 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 
 	int i, r;
 	int err = 0;
-
-#ifdef CONFIG_OF
-	kp_base = of_iomap(pdev->dev.of_node, 0);
-	if (!kp_base) {
-		pr_warn(KPD_SAY "KP iomap failed\n");
-		return -ENODEV;
-	};
-
-	kp_irqnr = irq_of_parse_and_map(pdev->dev.of_node, 0);
-	if (!kp_irqnr) {
-		pr_warn(KPD_SAY "KP get irqnr failed\n");
-		return -ENODEV;
-	}
-	pr_warn(KPD_SAY "kp base: 0x%p, addr:0x%p,  kp irq: %d\n", kp_base,&kp_base, kp_irqnr);
-#endif
 
 	kpd_ldvt_test_init();	/* API 2 for kpd LFVT test enviroment settings */
 
